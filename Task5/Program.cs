@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Дана действительная квадратная матрица порядка n.Найти наибольшее из значений элементов, расположенных в заштрихованной части матрицы
+
 namespace Task5
 {
     class Program
@@ -85,7 +87,7 @@ namespace Task5
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                 {
-                    Console.WriteLine("Введите элемент для позиции ({0}, {1}):", i, j);
+                    Console.WriteLine("Введите элемент для позиции ({0}, {1}):", i+1, j+1);
                     arr[i, j] = CheckDouble();
                     if (arr[i, j].ToString().Length > maxLength) maxLength = arr[i, j].ToString().Length;
                 }
@@ -100,18 +102,22 @@ namespace Task5
             {
                 for (int j = 0; j < size; j++)
                 {
-                    Console.CursorLeft = (maxLength + 2) * j;
-                    if (found && arr[i, j] == maxVal)
+                    Console.CursorLeft = (maxLength + 2) * j;                    
+                    if (j >= i && j <= size - 1 - i)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.Write(arr[i, j]);
-                        Console.ResetColor();
-                    }
-                    else if (j >= i && j <= size - 1 - i)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.Write(arr[i, j] + "  ");
-                        Console.ResetColor();
+                        if (found && arr[i, j] == maxVal)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(arr[i, j]);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            Console.Write(arr[i, j] + "  ");
+                            Console.ResetColor();
+                        }
+                        
                     }
                     else Console.Write(arr[i, j] + "  ");
                 }
