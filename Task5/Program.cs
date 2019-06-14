@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 //Дана действительная квадратная матрица порядка n.Найти наибольшее из значений элементов, расположенных в заштрихованной части матрицы
 
@@ -22,7 +18,7 @@ namespace Task5
             do
             {
                 Console.WriteLine("Введите порядок квадратной матрицы:");
-                n = CheckInt(0, 0);
+                n = CheckInt(0, 21);
                 arr = new double[n, n];
                 Vvod();
                 double max = GetMax(n);
@@ -32,6 +28,8 @@ namespace Task5
                 end = CheckKey();
             } while (!end);
         }
+
+        //функция для выбора способа ввода матрицы
         public static void Vvod()
         {
             Console.WriteLine("Выберите способ ввода массива:\n1)Ввод с клавиатуры\n2)Заполнение рандомными числами");
@@ -47,6 +45,7 @@ namespace Task5
             }
 
         }
+        //Проверка ввода целого числа
         public static int CheckInt(int a, int b)
         {
             int num;
@@ -55,10 +54,12 @@ namespace Task5
             {
                 if (a != b) okay = Int32.TryParse(Console.ReadLine(), out num) && (num > a) && (num < b);
                 else okay = Int32.TryParse(Console.ReadLine(), out num) && (num > a);
-                if (!okay) Console.WriteLine("Ошибка ввода. Повторите ввод целого числа");
+                if (!okay) if (a != b) Console.WriteLine("Ошибка ввода. Повторите ввод целого положиельного числа, не превышающего " + (b - 1));
+                    else Console.WriteLine("Ошибка ввода. Повторите ввод целого положиельного числа");
             } while (!okay);
             return num;
         }
+        //Проверка ввода нецелого числа
         public static double CheckDouble()
         {
             double num;
@@ -70,6 +71,7 @@ namespace Task5
             } while (!okay);
             return num;
         }
+        //Формирование матрицы с помощью ДСЧ
         public static void CreateRnd(int size)
         {
             maxLength = 0;
@@ -81,6 +83,7 @@ namespace Task5
                 }
             found = false;
         }
+        //Ввод массива с клавиатуры
         public static void CreateKey(int size)
         {
             maxLength = 0;
@@ -93,6 +96,7 @@ namespace Task5
                 }
             found = false;
         }
+        //Печать матрицы
         public static void PrintArr(int size)
         {
             int limI;
@@ -128,23 +132,28 @@ namespace Task5
                 for (int j = 0; j < size; j++)
                 {
                     Console.CursorLeft = (maxLength + 2) * j;
-                    if (found && arr[i, j] == maxVal)
+                    
+                    if (j <= i && j >= size - 1 - i)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.Write(arr[i, j] + "  ");
-                        Console.ResetColor();
-                    }
-                    else if (j <= i && j >= size - 1 - i)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.Write(arr[i, j] + "  ");
-                        Console.ResetColor();
+                        if (found && arr[i, j] == maxVal)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(arr[i, j] + "  ");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            Console.Write(arr[i, j] + "  ");
+                            Console.ResetColor();
+                        }                       
                     }
                     else Console.Write(arr[i, j] + "  ");
                 }
                 Console.WriteLine();
             }
         }
+        //Поиск максимального элемента в массиве
         public static double GetMax(int size)
         {
             int limI;
@@ -176,6 +185,7 @@ namespace Task5
             found = true;
             return maxVal;
         }
+        //Проверка на выход из программы
         public static bool CheckKey()
         {
             bool next, end = false;
